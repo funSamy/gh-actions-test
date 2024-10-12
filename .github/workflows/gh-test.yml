@@ -28,7 +28,7 @@ jobs:
 
       # 4. Build and push Docker images using Docker Compose
       - name: Build Docker Compose services
-        run: docker compose build
+        run: docker compose -f ./docker-compose.yml build
 
       # 5. (Optional) Run tests or other commands
       - name: Run tests
