@@ -42,4 +42,4 @@ services:
 
 secrets:
   secret_message:
-    file: ./secrets/secret_message.txt
+    file: ./secret_message.txt
