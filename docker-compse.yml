@@ -17,12 +17,30 @@
 #     file: ./path/to/aws_s3_bucket_name
 
 services:
-  secret_cow:
-    image: docker/whalesay:latest
-    command: bash -c "cowsay $(cat /run/secrets/secret_message)"
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
     secrets:
       - secret_message
+    volumes:
+      - ./html:/usr/share/nginx/html
+    environment:
+      - NGINX_SECRET_MESSAGE_FILE=/run/secrets/secret_message
+    command: /bin/bash -c "echo 'Fun with Docker Compose!' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+
+  # A fun Alpine container that just pings the web server
+  pinger:
+    image: alpine:latest
+    depends_on:
+      - web
+    secrets:
+      - secret_message
+    environment:
+      - SECRET_MESSAGE_FILE=/run/secrets/secret_message
+    command: /bin/sh -c "apk add --no-cache curl && sleep 5 && curl -s http://web:80 && echo '\nSecret message:' && cat /run/secrets/secret_message"
 
 secrets:
   secret_message:
-    file: ./secret_message.txt
+    file: ./secrets/secret_message.txt
+
