@@ -17,6 +17,9 @@ jobs:
         run: |
           docker --version
           docker compose version
+
+      - name: Checkout the repo
+        uses: actions/checkout@v4.2.1
       - name: Test compose
         run: docker compose build .
         
