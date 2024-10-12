@@ -1,0 +1,17 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    command: ["npm", "start"]
+    secrets:
+      - AWS_REGION
+      - AWS_S3_BUCKET_NAME
+    environment:
+      AWS_REGION_FILE: /run/secrets/AWS_REGION
+      AWS_S3_BUCKET_NAME_FILE: /run/secrets/AWS_S3_BUCKET_NAME
+    ports:
+      - 5000:5000
+secrets:
+  AWS_REGION:
+    file: ./path/to/aws_region
+  AWS_S3_BUCKET_NAME:
+    file: ./path/to/aws_s3_bucket_name
