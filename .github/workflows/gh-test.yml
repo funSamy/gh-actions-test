@@ -15,5 +15,5 @@ jobs:
       #   run: sudo apt-get install -y docker.io && sudo systemctl start docker
       - name: '2. Docker version'
         run: |
-          docker --version
+          docker compose
         
