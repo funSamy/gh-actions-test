@@ -1,17 +1,28 @@
+# services:
+#   app:
+#     image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+#     command: ["npm", "start"]
+#     secrets:
+#       - AWS_REGION
+#       - AWS_S3_BUCKET_NAME
+#     environment:
+#       AWS_REGION_FILE: /run/secrets/AWS_REGION
+#       AWS_S3_BUCKET_NAME_FILE: /run/secrets/AWS_S3_BUCKET_NAME
+#     ports:
+#       - 5000:5000
+# secrets:
+#   AWS_REGION:
+#     file: ./path/to/aws_region
+#   AWS_S3_BUCKET_NAME:
+#     file: ./path/to/aws_s3_bucket_name
+
 services:
-  app:
-    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
-    command: ["npm", "start"]
+  secret_cow:
+    image: docker/whalesay:latest
+    command: bash -c "cowsay $(cat /run/secrets/secret_message)"
     secrets:
-      - AWS_REGION
-      - AWS_S3_BUCKET_NAME
-    environment:
-      AWS_REGION_FILE: /run/secrets/AWS_REGION
-      AWS_S3_BUCKET_NAME_FILE: /run/secrets/AWS_S3_BUCKET_NAME
-    ports:
-      - 5000:5000
+      - secret_message
+
 secrets:
-  AWS_REGION:
-    file: ./path/to/aws_region
-  AWS_S3_BUCKET_NAME:
-    file: ./path/to/aws_s3_bucket_name
+  secret_message:
+    file: ./secret_message.txt
